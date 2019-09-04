@@ -2,48 +2,64 @@ import React, {Component} from 'react';
 import PersonalForm from '../PersonalForm/PersonalForm';
 import CardForm from '../CardForm/CardForm';
 import Step from '../Step/Step';
-import Title from '../Title/Title';
+import './App.css';
 
+const stepTitles = ['Personal information', 'Card information', 'Finish'];
 class App extends Component{
-  state = {
-    step: 1,
-    firstName: '',
-    lastName: '',
-    email: '',
-    cardNumber: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+        step: 1,
+        firstName: '',
+        lastName: '',
+        email: '',
+        cardNumber: '',
+        isTimeOver: false
+    };
+    this.handleTabClick = this.handleTabClick.bind(this);
+    this.handleChangeForm = this.handleChangeForm.bind(this);
+    this.handleClickNextForm = this.handleClickNextForm.bind(this);
+    this.handleChangeTimeOver = this.handleChangeTimeOver.bind(this);
+    this.isFormCommitable = this.isFormCommitable.bind(this);
+    this.renderForm = this.renderForm.bind(this);
+  }
 
   renderForm = () =>{
     let {firstName, lastName, email, step, cardNumber} = this.state;
-    let templ;
 
     switch (step){
       case 1:
-        templ = <PersonalForm firstName={firstName} lastName={lastName} email={email} onChangeForm={this.handleChangeForm}/>;
-        break;
+        return <PersonalForm 
+          firstName={firstName} 
+          lastName={lastName} 
+          email={email} 
+          onChangeForm={this.handleChangeForm}
+        />;
       case 2:
-        templ = <CardForm cardNumber={cardNumber} onChangeForm={this.handleChangeForm} onChangeTimeOver={this.handleChangeTimeOver}/>;
-        break;
+        return <CardForm 
+          cardNumber={cardNumber} 
+          onChangeForm={this.handleChangeForm} 
+          onChangeTimeOver={this.handleChangeTimeOver}
+        />;
       case 3:
-        templ = <p data-test="congratulations">Поздравляем!</p>;
-        break;
+        return <p data-test="congratulations">Поздравляем!</p>;
       default:
+        return false;
     }
-    
-    return templ;
   }
 
   isFormCommitable = () => {
-    if (this.state.step === 1){
-      if (this.state.firstName !== '' && this.state.lastName !== '' && this.state.email !== '' 
-        && this.state.email.includes('@'))
-        return true;
-    } else if (this.state.step === 2){
-      if (this.state.cardNumber.length === 16)
-        return true;
+    switch (this.state.step){
+      case 1:
+        return this.state.firstName !== '' 
+        && this.state.lastName !== '' 
+        && this.state.email !== '' 
+        && this.state.email.includes('@');
+      case 2:
+        return this.state.cardNumber.length === 16;
+      default:
+        return false;
     }
-
-    return false;
   }
 
   handleChangeForm = (arg1, arg2) => {
@@ -61,20 +77,49 @@ class App extends Component{
   }
 
   handleClickNextForm = evt => {
+    if (this.state.step === 3) return;
     this.setState(state => ({
       step: state.step + 1
     }))
   }
 
+  handleChangeTimeOver(bool) {
+    let timeOverStatus = this.state.isTimeOver;
+    if (bool) this.setState({ isTimeOver: !timeOverStatus });
+  }
+
   render(){
     return <div className="container">
-      <Title />
-      <div className="tab-panel"></div>
+      <div className="tab-panel">
+        {stepTitles.map((title, index) => (
+          <Step
+              key={title}
+              number={index + 1}
+              onClick={this.handleTabClick}
+              isSelected={this.state.step - 1 === index}
+              isClickable={
+                index !== this.state.step - 1 &&
+                index < this.state.step
+              }
+            >
+              {title}
+            </Step>
+        ))}
+      </div>
       <div className="form-content">
-        <Step isSelected isClickable number={this.state.step} onClick={this.renderForm} />
+        {this.renderForm()}
       </div>
       <div className="button-panel">
-        <button className="button button-next" onClick={this.handleClickNextForm}></button>
+        <button
+            disabled={
+                !this.isFormCommitable() ||
+                this.state.isTimeOver
+            }
+            className="button-next"
+            onClick={this.handleClickNextForm}
+        >
+            Next
+        </button>
       </div>
     </div>;
   }

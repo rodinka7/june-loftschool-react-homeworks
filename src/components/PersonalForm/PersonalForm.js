@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
+import Title from '../Title/Title'
+import './PersonalForm.css'
 
 class PersonalForm extends Component{
+  constructor(props) {
+    super(props)
 
-  handleInputChange = evt => {
-    let name = evt.target.name;
-    let value = evt.target.value;
-    this.props.onChangeForm(name, value);
+    this.handleChangeForm = this.handleChangeForm.bind(this)
   }
 
   handleChangeForm = evt => {
@@ -14,11 +15,12 @@ class PersonalForm extends Component{
   }
 
   render(){
-    return <form className="personal-form">
-      <input name="firstName" type="text" onChange={this.handleInputChange} />
-      <input name="lastName" type="text" onChange={this.handleInputChange} />
-      <input name="email" type="email" onChange={this.handleInputChange}  />
-    </form>;
+    return <div className="personal-form"  data-test="personal-form">
+      <Title className="title">Personal info</Title>
+      <input name="firstName" type="text" onChange={this.handleChangeForm} />
+      <input name="lastName" type="text" onChange={this.handleChangeForm} />
+      <input name="email" type="email" onChange={this.handleChangeForm}  />
+    </div>;
   }
 }
 

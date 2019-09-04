@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
+import './Step.css';
 
 class Step extends Component{
-  handleClick = evt => {
-    if (this.props.isClickable)
-      this.props.onClick(this.props.number);
+  constructor(props) {
+    super(props);
+    this.state = {
+        noState: ''
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
+  
+  handleClick() {
+    if (!this.props.isClickable) return;
+    const { number, onClick } = this.props;
+    onClick(number);
+  } 
 
   render(){
-    let {isSelected, isClickable, number, children} = this.props;
-    let newClass = `step ${isSelected ? 'step-selected' : ''} ${isClickable ? 'step-clickable' : ''}`;
-    return <div className={newClass} onClick={this.handleClick}>
-      <div className="step__number">{number}</div>
-      <div className="step__title">{children}</div>
-    </div>;
+    return (
+      <div>
+          <div
+            className={
+                'step ' +
+                (this.props.isSelected ? 'step-selected ' : '') +
+                (this.props.isClickable ? 'step-clickable ' : '')
+            }
+            onClick={this.handleClick}
+          >
+            <div className="step__number">{this.props.number}</div>
+          </div>
+          <div className="step__title">{this.props.children}</div>
+      </div>
+  );
   }
 }
 

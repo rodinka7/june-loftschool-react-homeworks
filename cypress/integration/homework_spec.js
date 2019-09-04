@@ -33,9 +33,9 @@ describe('Домашнее задание 3го занятия', function() {
   describe('Card info', () => {
     beforeEach(() => {
       cy.visit('/');
-      cy.get('[data-test="personal-form"] [name="firstName"]').type('Al');
-      cy.get('[data-test="personal-form"] [name="lastName"]').type('Pacino');
-      cy.get('[data-test="personal-form"] [name="email"]').type('al@pacino.com');
+      // cy.get('[data-test="personal-form"] [name="firstName"]').type('Al');
+      // cy.get('[data-test="personal-form"] [name="lastName"]').type('Pacino');
+      // cy.get('[data-test="personal-form"] [name="email"]').type('al@pacino.com');
       cy.get('.button-next').click({ force: true });
     });
 
