@@ -22,7 +22,10 @@
   "devDependencies": {
     "cypress": "^3.0.1",
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "eslint-plugin-cypress": "^2.0.1"
+    "enzyme-adapter-react-16": "^1.1.1",    
+    "eslint-plugin-cypress": "^2.0.1",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4"
   }
 }
