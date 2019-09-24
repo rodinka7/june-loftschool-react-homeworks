@@ -9,7 +9,7 @@ export class App extends Component {
     return <div className="app">
       <Market />
       <Farm />
-      <Budget />
+      <Budget />      
     </div>;
   }
 }
