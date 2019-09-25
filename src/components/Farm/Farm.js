@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import './Farm.css';
 import Order from '../Farm';
+import { connect } from 'react-redux';
+import { moveOrderToCustomer } from '../../actions/farmActions';
+
+const mapStateToProps = state => ({
+  orders: state.orders
+})
+
+const mapDispatchToProps = state => ({
+  moveOrderToCustomer
+})
 
 export class Farm extends Component {
   moveOrderToCustomer = () => {
@@ -12,11 +22,11 @@ export class Farm extends Component {
     return (
       <div className="farm">
         <h2>Производство на ферме</h2>
-        <button onClick={this.moveOrderToCustomer} disabled={!orders || !orders.length}>
+        <button onClick={this.moveOrderToCustomer} disabled={!orders.length}>
           Отправить урожай клиенту
         </button>
         <div>
-          {orders && orders.map((order, index) => (
+          {orders.map((order, index) => (
             <Order
               name={order.name}
               price={order.price}
@@ -30,4 +40,7 @@ export class Farm extends Component {
   }
 }
 
-export default Farm;
+export default connect(
+  mapStateToProps, 
+  mapDispatchToProps
+)(Farm);
