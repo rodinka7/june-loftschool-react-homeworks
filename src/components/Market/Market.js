@@ -30,10 +30,16 @@ const mapStateToProps = state => ({
   orders: state.market.orders
 })
 
-const mapDispatchToProps = state => ({
-  createOrder,
-  moveOrderToFarm
-})
+const mapDispatchToProps = dispatch => {
+  return {
+    createOrder: payload => {
+      dispatch(createOrder(payload));
+    },
+    moveOrderToFarm: payload => {
+      dispatch(moveOrderToFarm(payload));
+    }
+  };
+};
 
 const getNewOrder = () => {
   return {

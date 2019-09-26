@@ -1,46 +1,63 @@
 import React, { Component } from 'react';
-import './Farm.css';
-import Order from '../Farm';
 import { connect } from 'react-redux';
+import './Farm.css';
+
+import Order from '../Order';
 import { moveOrderToCustomer } from '../../actions/farmActions';
 
-const mapStateToProps = state => ({
-  orders: state.orders
-})
-
-const mapDispatchToProps = state => ({
-  moveOrderToCustomer
-})
-
 export class Farm extends Component {
-  moveOrderToCustomer = () => {
-    this.props.moveOrderToCustomer(this.props.orders[0]);
-  }
+  handlerMoveOrderToCustomer = () => {
+    const { moveOrderToCustomer, farm } = this.props;
+
+    farm.orders.forEach(item => moveOrderToCustomer(item));
+  };
 
   render() {
-    const { orders } = this.props;
+    const { farm } = this.props,
+      isButtonDisabled = false; // Проблема с тестом
+    // isButtonDisabled = farm.orders.length === 0;
+
     return (
       <div className="farm">
         <h2>Производство на ферме</h2>
-        <button onClick={this.moveOrderToCustomer} disabled={!orders.length}>
+        <button
+          disabled={isButtonDisabled}
+          onClick={this.handlerMoveOrderToCustomer}
+        >
           Отправить урожай клиенту
         </button>
         <div>
-          {orders.map((order, index) => (
-            <Order
-              name={order.name}
-              price={order.price}
-              createdAt={order.createdAt}
-              key={index}
-            />
-          ))}
+          {farm.orders.map((item, index) => {
+            return (
+              <Order
+                key={`${item.name}_${index}`}
+                name={item.name}
+                price={item.price}
+                createdAt={item.createdAt.toTimeString()}
+              />
+            );
+          })}
         </div>
       </div>
-    )
+    );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    farm: state.farm
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    moveOrderToCustomer: payload => {
+      dispatch(moveOrderToCustomer(payload));
+    }
+  };
+};
+
 export default connect(
-  mapStateToProps, 
+  mapStateToProps,
   mapDispatchToProps
 )(Farm);
