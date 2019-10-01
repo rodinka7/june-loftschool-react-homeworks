@@ -1,7 +1,9 @@
 export const search = query =>
-  fetch(`http://api.tvmaze.com/search/shows?q=${query}`, {
-    method: 'GET',
-    mode: 'cors',
+  new Promise (resolve => {
+    fetch(`http://api.tvmaze.com/search/shows?q=${query}`, {
+      method: 'GET',
+      mode: 'cors',
+    }).then(response => resolve(response.json()));
   });    
 
 export const show = showId =>

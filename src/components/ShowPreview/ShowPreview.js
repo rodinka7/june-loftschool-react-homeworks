@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 
 class ShowPreview extends Component{
     render(){
+        {}
         return (
-            <div></div>
+            <div>
+                <img src={}/>
+            </div>
         )
     }
 }

@@ -1,5 +1,5 @@
 import { createAction } from 'redux-actions';
 
-export const fetchSearchRequest = createAction('FETCH_SEARCH_REQUEST');
-export const fetchSearchSuccess = createAction('FETCH_SEARCH_SUCCESS');
-export const fetchSearchError = createAction('FETCH_SEARCH_ERROR');
+export const searchRequest = createAction('SEARCH_REQUEST');
+export const searchSuccess = createAction('SEARCH_SUCCESS');
+export const searchFailure = createAction('SEARCH_FAILURE');
