@@ -2,9 +2,21 @@ import React, { Component } from 'react';
 import { searchRequest } from '../../actions/search';
 import { connect } from 'react-redux';
 
-class Search extends Component{
-    state = {
-        inputValue: ''
+import ShowPreview from '../ShowPreview';
+import { 
+    getSeries,
+    gerError,
+    getIsLoading,
+    getError
+ } from '../../selectors/search';
+
+class Search extends Component{    
+    constructor(props){
+        super(props);
+
+        this.state = {
+            inputValue: ''
+        }        
     }
 
     handleClick = evt => {
@@ -12,28 +24,45 @@ class Search extends Component{
         searchRequest(this.state.inputValue);
     }
 
+    handleInputChange = evt => {
+        this.setState({
+            inputValue: evt.target.value
+        })
+    }
+
     render(){
-        const { series } = this.props;
-        console.log(series);
+        const { series, isLoading, error } = this.props;        
         
+        if (isLoading)
+            return <div>Идет загрузка данных ... </div>;
+        
+        if (error)
+            return <div>При загрузке данных произошла ошибка</div>;
+
         return (
             <div>
-                <input type="search" value={this.state.inputValue}/>
+                <input type="search" onChange={this.handleInputChange} value={this.state.inputValue}/>
                 <button onClick={this.handleClick}>Search</button>
             
                 {
-                    // series.map(item => <div></div>)
+                    series && series.map(item => item.image && (<ShowPreview id={item.id} image={item.image} name={item.name} summery={item.summery} />))
                 }
             </div>    
         )
     }
 }
 
+Search.defaultProps = {
+    series: []
+}
+
 const mapStateToProps = state => {
     console.log(state);
     
     return {
-        series: state.search.series 
+        series: getSeries(state),
+        isLoading: getIsLoading(state),
+        error: getError(state)
     }
 }
 
