@@ -10,25 +10,29 @@ import {
 const series =  handleActions(
   {
     [searchRequest]: () => [],
-    [searchSuccess]: (_state, action) => action.payload
+    [searchSuccess]: (_state, action) => {
+      console.log(action);
+      
+      return [...action.payload];
+    }
   },
   []
 );
 
 const isLoading = handleActions(
   {
-    [searchRequest]: () => true,
-    [searchSuccess]: () => false
+    [searchRequest.toString()]: () => true,
+    [searchSuccess.toString()]: () => false
   },
   false
 );
 
 const error = handleActions({
-  [searchFailure]: (_state, action) => action.payload
+  [searchFailure.toString()]: (_state, action) => action.payload
 }, null);
 
-export default combineReducers(
+export default combineReducers({
   series,
   isLoading,
   error
-);
+});

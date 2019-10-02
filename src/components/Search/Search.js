@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { searchRequest } from '../../actions/search';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import ShowPreview from '../ShowPreview';
 import { 
     getSeries,
-    gerError,
     getIsLoading,
     getError
  } from '../../selectors/search';
@@ -43,17 +43,12 @@ class Search extends Component{
             <div>
                 <input type="search" onChange={this.handleInputChange} value={this.state.inputValue}/>
                 <button onClick={this.handleClick}>Search</button>
-            
-                {
-                    series && series.map(item => item.image && (<ShowPreview id={item.id} image={item.image} name={item.name} summery={item.summery} />))
-                }
+                <div className="t-search-result">
+                    {series && series.map(item => item.image && (<ShowPreview key={item.id} {...item} />))}
+                </div>
             </div>    
         )
     }
-}
-
-Search.defaultProps = {
-    series: []
 }
 
 const mapStateToProps = state => {
@@ -62,13 +57,15 @@ const mapStateToProps = state => {
     return {
         series: getSeries(state),
         isLoading: getIsLoading(state),
-        error: getError(state)
+        error: getError(state),
     }
 }
 
 const mapDispatchToProps = { searchRequest };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Search);
+export default withRouter(
+    connect(
+        mapStateToProps,
+        mapDispatchToProps
+    )(Search)
+)

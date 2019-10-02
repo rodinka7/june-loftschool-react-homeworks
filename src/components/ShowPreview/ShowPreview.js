@@ -3,9 +3,10 @@ import React, { Component } from 'react';
 
 class ShowPreview extends Component{
     render(){
-        const { id, image, name, summary } = this.props;
+        const { image, name, summary } = this.props;
+                
         return (
-            <div key={id}>
+            <div className="t-preview">
                 <img src={image} alt={name}/>       
                 <div dangerouslySetInnerHTML={{__html: summary}} />                     
             </div>

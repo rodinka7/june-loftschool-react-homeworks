@@ -8,21 +8,21 @@ import {
 } from '../actions/show';
 
 const series = handleActions({
-  [showRequest]: () => [],
-  [showSuccess]: (_state, action) => action.payload
+  [showRequest.toString()]: () => [],
+  [showSuccess.toString()]: (_state, action) => action.payload
 }, []);
 
 const isLoading = handleActions({
-  [showRequest]: () => true,
-  [showSuccess]: () => false
+  [showRequest.toString()]: () => true,
+  [showSuccess.toString()]: () => false
 }, false);
 
 const error = handleActions({
-  [showFailure]: (_state, action) => action.payload
+  [showFailure.toString()]: (_state, action) => action.payload
 }, null);
 
-export default combineReducers(
+export default combineReducers({
   series,
   isLoading,
   error
-);
+});

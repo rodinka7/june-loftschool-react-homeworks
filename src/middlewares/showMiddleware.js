@@ -10,4 +10,5 @@ export default store => next => action => {
         show(action.payload)
             .then(response => store.dispatch(showSuccess(response.json())))
             .catch(error => store.dispatch(showFailure(error)));
+    return next(action);
 }
