@@ -7,7 +7,8 @@ class ShowPreview extends Component{
                 
         return (
             <div className="t-preview">
-                <img src={image} alt={name}/>       
+                <div>{name}</div>
+                {image && (<img src={image} alt={name}/>)}
                 <div dangerouslySetInnerHTML={{__html: summary}} />                     
             </div>
         )
