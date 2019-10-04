@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-// import { connect } from 'redux';
+import { Link } from 'react-router-dom'
 
 class ShowPreview extends Component{
     render(){
-        const { image, name, summary } = this.props;
-                
+        const { id, image, name, summary } = this.props;        
+
         return (
             <div className="t-preview">
-                <div>{name}</div>
+                <Link to={`/shows/${id}`}>
+                    <h2 className="t-link">{name}</h2>
+                </Link>
                 {image && (<img src={image} alt={name}/>)}
                 <div dangerouslySetInnerHTML={{__html: summary}} />                     
             </div>
@@ -15,11 +17,4 @@ class ShowPreview extends Component{
     }
 }
 
-// const mapStateToProps = state => ({
-//     id: state.search
-// })
-
-// export default connect(
-//     mapStateToProps
-// )(ShowPreview);
 export default ShowPreview;

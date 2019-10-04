@@ -42,7 +42,7 @@ class Search extends Component{
         return (
             <div>
                 <input type="search" onChange={this.handleInputChange} value={this.state.inputValue}/>
-                <button onClick={this.handleClick}>Search</button>
+                <button onClick={this.handleClick}>Найти</button>
                 <div className="t-search-result">
                     {series && series.map(item => item.image && (<ShowPreview key={item.id} {...item} />))}
                 </div>
@@ -51,9 +51,7 @@ class Search extends Component{
     }
 }
 
-const mapStateToProps = state => {
-    console.log(state);
-    
+const mapStateToProps = state => {    
     return {
         series: getSeries(state),
         isLoading: getIsLoading(state),
