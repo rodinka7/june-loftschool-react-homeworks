@@ -24,8 +24,8 @@ export class AppRouter extends Component {
     }
 
     render() {
-        const { isAuthorized, errorMessage, isError} = this.props;
-
+        const { isAuthorized, errorMessage, isError} = this.props;       
+        
         return (
             <main>
                 {isError && 

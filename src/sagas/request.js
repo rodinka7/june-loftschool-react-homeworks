@@ -12,12 +12,13 @@ export default function*(fn, args) {
         const response = yield call(fn, args);
         if (yield select(isNetworkErrorPresent))
             yield put(clearNetworkErrors());
+            
         return response;
     } catch (error) {
         yield put(networkError(error));
 
         if (error.response.status === 401)
-            put(logout());
+            yield put(logout());
         
         throw error;
     }

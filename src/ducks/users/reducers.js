@@ -2,13 +2,13 @@ import { combineReducers } from 'redux';
 import { handleActions } from 'redux-actions';
 import { userRequest, userSuccess, userFailure } from './actions';
 
-const data = handleActions({
-    [userRequest]: () => [],
-    [userSuccess]: (_state, action) => action.payload,
-    [userFailure]: () => [] 
-}, []);
+export const data = handleActions({
+    [userRequest]: () => null,
+    [userSuccess]: (_state, action) => action.payload.data,
+    [userFailure]: () => null 
+}, null);
 
-const error = handleActions({
+export const error = handleActions({
     [userRequest]: () => null,
     [userSuccess]: () => null,
     [userFailure]: (_state, action) => action.payload
@@ -19,7 +19,7 @@ const isFetched = handleActions({
     [userFailure]: () => false
 }, false);
 
-const isFetching = handleActions({
+export const isFetching = handleActions({
     [userRequest]: () => true,
     [userSuccess]: () => false,
     [userFailure]: () => false

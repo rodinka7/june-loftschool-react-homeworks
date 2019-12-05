@@ -11,6 +11,7 @@ import { getUserFollowings, getUserFollowers } from '../api';
 function* getFollowers(action) {
     try {
         const response = yield call(requestFlow, getUserFollowings, action.payload);
+        
         yield put(followersSuccess(response));
     } catch(error) {
         yield put(followersFailure(error));

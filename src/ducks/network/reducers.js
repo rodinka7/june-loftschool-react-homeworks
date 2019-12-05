@@ -8,7 +8,7 @@ const error = handleActions({
 }, null);
 
 const message = handleActions({
-    [networkError]: (_state, action) => action.payload.response.message,
+    [networkError]: (_state, action) => action.payload.message,
     [clearNetworkErrors]: () => null
 }, null);
 

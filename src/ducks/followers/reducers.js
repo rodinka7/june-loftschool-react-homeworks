@@ -6,19 +6,19 @@ import {
     followersFailure
 } from './actions';
 
-const data = handleActions({
+export const data = handleActions({
     [followersRequest]: () => [],
     [followersSuccess]: (_state, action) => action.payload.data,
     [followersFailure]: () => []
 }, []);
 
-const error = handleActions({
+export const error = handleActions({
     [followersRequest]: state => null,
     [followersSuccess]: state => null,
-    [followersFailure]: (_state, action) => action.apyload
+    [followersFailure]: (_state, action) => action.payload
 }, null);
 
-const isFetching = handleActions({
+export const isFetching = handleActions({
     [followersRequest]: () => true,
     [followersSuccess]: () => false,
     [followersFailure]: () => false

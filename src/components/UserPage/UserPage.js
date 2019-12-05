@@ -4,39 +4,42 @@ import Spinner from 'react-svg-spinner';
 import { getData, getIsFetching, userRequest } from '../../ducks/users';
 import Followers from '../Followers';
 
-class UserPage extends Component {
+export class UserPage extends Component {
     componentDidMount(){
-        const { userRequest, match } = this.props;
+        const { userRequest, match } = this.props;       
         userRequest(match.params.name);
     }
 
     componentDidUpdate(prevProps){        
         const { userRequest, match, location } = this.props;
-        if (location.pathname !== prevProps.location.pathname)
+        if (location.pathname !== prevProps.location.pathname){
             userRequest(match.params.name);
+        }
     }
 
     render() {
-        const { isFecthing, data } = this.props;
+        const { isFetching, data } = this.props;
 
-        if (isFecthing)
+        if (isFetching){
             return (
                 <div className="notifications">
                     <div className="spinner-wrapper">
-                        <Spinner className="Spinner" size="64px" gap={5} />
+                        <Spinner className="Spinner" color="fuchsia" size="64px" gap={5} />
                     </div>
                 </div>
             )
-        
-        if (!data)
+        }
+
+        if (!data){
             return (
                 <div className="notifications">
-                    <div className="notification">There is no data ... </div>
+                    <div className="notification no-data">There is no data ... </div>
                 </div>
             )
+        }
         
-        const { login, avatar_url, followers, public_repos } = data;
-
+        const { login, avatar_url, following, public_repos } = data;               
+                
         return (
             <div className="user-block">
                 <div className="user">
@@ -44,12 +47,14 @@ class UserPage extends Component {
                         <img className="user-img" src={avatar_url} alt={login} />
                     </div>
                 </div>
+
                 <div className="user-info">
                     <h3>{login}</h3>
-                    <p>Followers: {followers}</p>
+                    <p>Followings: {following}</p>
                     <p>Public Repository: {public_repos}</p>
                 </div>
-                <Followers className="followers" login={login} />
+
+                {login && <Followers className="followers" login={login} />}
             </div>
         )
     }
