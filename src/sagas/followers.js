@@ -6,7 +6,7 @@ import {
     followersFailure
 } from '../ducks/followers';
 import requestFlow from './request';
-import { getUserFollowings, getUserFollowers } from '../api';
+import { getUserFollowings } from '../api';
 
 function* getFollowers(action) {
     try {

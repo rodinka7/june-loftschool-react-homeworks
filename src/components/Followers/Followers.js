@@ -2,11 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-svg-spinner';
+import styled from 'styled-components';
+
 import {
     followersRequest,    
     getFollowers,
     getFollowersIsFetching
 } from '../../ducks/followers';
+
+const Main = styled.div`
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    
+    img {
+        width: 200px;
+    }
+`;
 
 export class Followers extends Component {
     componentDidMount(){
@@ -19,7 +33,7 @@ export class Followers extends Component {
         
         if (isFetching){
             return <div className="spinner-wrap">
-                <Spinner className="Spinner" color="fuchsia" size="64px" gap={5}/>
+                <Spinner className="Spinner" color="blue" size="64px" gap={5}/>
             </div>;
         }
 
@@ -27,7 +41,7 @@ export class Followers extends Component {
             return <div>No followings data ...</div>;
         }
 
-        return <div>
+        return <Main>
             {
                 followers.map(item => {
                     return <div key={item.id} className="follower-wrap">
@@ -44,7 +58,7 @@ export class Followers extends Component {
                     </div>
                 })
             }
-        </div>
+        </Main>
     }
 }
 

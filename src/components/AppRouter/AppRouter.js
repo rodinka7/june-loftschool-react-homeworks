@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import Login from '../Login';
 import PrivateRoute from '../PrivateRoute';
@@ -17,7 +18,29 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = { logout };
 
-export class AppRouter extends Component {
+const Main = styled.div`
+    width: 80%;
+`;
+
+const Logout = styled.div`
+    width: 100%;
+    display: flex;
+    margin-bottom: 2rem;
+
+    button {
+        background: papayawhip;
+        color: rebeccapurple;
+        border: none;   
+        padding: 7px;     
+        cursor: pointer;
+        margin-left: auto;
+    
+        &:hover {
+            background: palevioletred;
+        }
+    }
+`;
+export class AppRouter extends Component {    
     handleClick = () => {
         const { logout } = this.props;
         logout();
@@ -27,7 +50,7 @@ export class AppRouter extends Component {
         const { isAuthorized, errorMessage, isError} = this.props;       
         
         return (
-            <main>
+            <Main>
                 {isError && 
                     <div className='error'>
                         {errorMessage}
@@ -35,9 +58,9 @@ export class AppRouter extends Component {
                 }
 
                 {isAuthorized &&
-                    <div className='logout'>
+                    <Logout className='logout'>
                         <button onClick={this.handleClick}>Logout</button>
-                    </div>
+                    </Logout>
                 }  
 
                 <Switch>
@@ -46,7 +69,7 @@ export class AppRouter extends Component {
                     <PrivateRoute path='/users/:name' component={UserPage} isAuthorized={isAuthorized} />                 
                     <Redirect to='/users/me' />
                 </Switch>
-            </main>
+            </Main>
         )
     }
 }

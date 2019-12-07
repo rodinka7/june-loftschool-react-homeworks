@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Spinner from 'react-svg-spinner';
+import styled from 'styled-components';
+
 import { getData, getIsFetching, userRequest } from '../../ducks/users';
 import Followers from '../Followers';
+
+const UserImg = styled.img`
+    width: 50%;
+`;
 
 export class UserPage extends Component {
     componentDidMount(){
@@ -24,7 +30,7 @@ export class UserPage extends Component {
             return (
                 <div className="notifications">
                     <div className="spinner-wrapper">
-                        <Spinner className="Spinner" color="fuchsia" size="64px" gap={5} />
+                        <Spinner className="Spinner" color="blue" size="64px" gap={5} />
                     </div>
                 </div>
             )
@@ -44,14 +50,14 @@ export class UserPage extends Component {
             <div className="user-block">
                 <div className="user">
                     <div className="user-img-wrap">
-                        <img className="user-img" src={avatar_url} alt={login} />
+                        <UserImg className="user-img" src={avatar_url} alt={login} />
                     </div>
                 </div>
 
                 <div className="user-info">
                     <h3>{login}</h3>
-                    <p>Followings: {following}</p>
                     <p>Public Repository: {public_repos}</p>
+                    <p>Followings: {following}</p>
                 </div>
 
                 {login && <Followers className="followers" login={login} />}
